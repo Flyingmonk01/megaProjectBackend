@@ -2,12 +2,29 @@
 
 import { config } from "dotenv";
 import connectDB from "./db/index.js";
+import { app } from "./app.js";
 
 
 config({
     path: './env'
 })
-connectDB();
+
+const port = process.env.PORT || 8000;
+
+connectDB()
+.then(()=>{
+    app.on("error",(error)=>{
+        console.log('Error in express', error);
+        throw error;
+    })
+
+    app.listen(port, ()=>{
+        console.log(`App is listening on port ${port}`);
+    })
+})
+.catch((err)=>{
+    console.log("Monogodb connection failed!!!", err);
+});
 
 
 
