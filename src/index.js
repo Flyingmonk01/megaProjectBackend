@@ -11,6 +11,10 @@ config({
 
 const port = process.env.PORT || 8000;
 
+app.get('/', (req, res)=>{
+    res.send('<h1>Hey Sameer! Are you there! </h1>')
+})
+
 connectDB()
 .then(()=>{
     app.on("error",(error)=>{
