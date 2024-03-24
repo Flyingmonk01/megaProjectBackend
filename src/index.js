@@ -1,34 +1,44 @@
 // require('dotenv').config({path: './env'});
-
 import { config } from "dotenv";
 import connectDB from "./db/index.js";
 import { app } from "./app.js";
-
+import cloudinary from "cloudinary";
 
 config({
-    path: '../.env'
-})
+    path: "./.env",
+});
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const port = process.env.PORT || 8000;
 
-app.get('/', (req, res)=>{
-    res.send('<h1>Hey Sameer! Are you there! </h1>')
-})
+app.get("/", (req, res) => {
+    res.send("<h1>Hey Sameer! Are you there! </h1>");
+});
 
 connectDB()
-.then(()=>{
-    app.on("error",(error)=>{
-        console.log('Error in express', error);
-        throw error;
-    })
+    .then(() => {
+        app.on("error", (error) => {
+            console.log("Error in express", error);
+            throw error;
+        });
 
-    app.listen(port, ()=>{
-        console.log(`App is listening on port ${port}`);
+        app.listen(port, () => {
+            console.log(`App is listening on port ${port}`);
+        });
     })
-})
-.catch((err)=>{
-    console.log("Monogodb connection failed!!!", err);
-});
+    .catch((err) => {
+        console.log("Monogodb connection failed!!!", err);
+    });
+
+
+
+
+
 
 
 
