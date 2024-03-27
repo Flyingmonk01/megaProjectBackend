@@ -16,26 +16,26 @@ cloudinary.config({
 
 const port = process.env.PORT || 8000;
 
+connectDB()
+.then(() => {
+    app.on("error", (error) => {
+        console.log("Error in express", error);
+        throw error;
+    });
+    
+    app.listen(port, () => {
+        console.log(`App is listening on port ${port}`);
+    });
+})
+.catch((err) => {
+    console.log("Monogodb connection failed!!!", err);
+});
+
+
+
 app.get("/", (req, res) => {
     res.send("<h1>Hey Sameer! Are you there! </h1>");
 });
-
-connectDB()
-    .then(() => {
-        app.on("error", (error) => {
-            console.log("Error in express", error);
-            throw error;
-        });
-
-        app.listen(port, () => {
-            console.log(`App is listening on port ${port}`);
-        });
-    })
-    .catch((err) => {
-        console.log("Monogodb connection failed!!!", err);
-    });
-
-
 
 
 
